@@ -1,0 +1,72 @@
+{
+  "publicKey": "GXQsNZHe9smhH3F1pQmMUCwALUYTsg61keXJZGG51oFm",
+  "mint": {
+    "publicKey": "GXQsNZHe9smhH3F1pQmMUCwALUYTsg61keXJZGG51oFm",
+    "header": {
+      "executable": false,
+      "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "lamports": {
+        "basisPoints": "1461600",
+        "identifier": "SOL",
+        "decimals": 9
+      },
+      "rentEpoch": "18446744073709551616",
+      "exists": true
+    },
+    "mintAuthority": {
+      "__option": "None"
+    },
+    "supply": "999998411668726885",
+    "decimals": 9,
+    "isInitialized": true,
+    "freezeAuthority": {
+      "__option": "None"
+    }
+  },
+  "metadata": {
+    "publicKey": "9CQteX2R4RgvKF7b2CWcTjbogFkubAvrYDW1mCt7fyKJ",
+    "header": {
+      "executable": false,
+      "owner": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s",
+      "lamports": {
+        "basisPoints": "15115600",
+        "identifier": "SOL",
+        "decimals": 9
+      },
+      "rentEpoch": "18446744073709551616",
+      "exists": true
+    },
+    "key": 4,
+    "updateAuthority": "21eTHDGR4SqZXB28jVaXUZ8jKEW4RF4286AYqWTkwzVe",
+    "mint": "GXQsNZHe9smhH3F1pQmMUCwALUYTsg61keXJZGG51oFm",
+    "name": "FOMO",
+    "symbol": "FOMO",
+    "uri": "https://fully-would-island.quicknode-ipfs.com/ipfs/QmcHL77BXSY7ubJHYFmKjTy6rSBvMLEHmxqvex7goYdtGm",
+    "sellerFeeBasisPoints": 0,
+    "creators": {
+      "__option": "None"
+    },
+    "primarySaleHappened": false,
+    "isMutable": true,
+    "editionNonce": {
+      "__option": "Some",
+      "value": 251
+    },
+    "tokenStandard": {
+      "__option": "Some",
+      "value": 2
+    },
+    "collection": {
+      "__option": "None"
+    },
+    "uses": {
+      "__option": "None"
+    },
+    "collectionDetails": {
+      "__option": "None"
+    },
+    "programmableConfig": {
+      "__option": "None"
+    }
+  }
+}

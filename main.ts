@@ -3,6 +3,7 @@ import Redis from "ioredis";
 import NodeCache from "node-cache";
 import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import {
+  DigitalAsset,
   fetchDigitalAsset,
   mplTokenMetadata,
 } from "@metaplex-foundation/mpl-token-metadata";
@@ -21,6 +22,8 @@ class Token {
   symbol: string;
   decimals: number;
   supply: string;
+  update_authority: string;
+  uri: string;
 
   constructor(
     address: string,
@@ -28,16 +31,31 @@ class Token {
     symbol: string,
     decimals: number,
     supply: string,
+    update_authority: string,
+    uri: string,
   ) {
     this.address = address;
     this.name = name;
     this.symbol = symbol;
     this.decimals = decimals;
     this.supply = supply;
+    this.update_authority = update_authority;
+    this.uri = uri;
   }
 }
 
 const TokenKeyPrefix = "t:";
+
+function logDigitalAsset(digitalAsset: DigitalAsset) {
+  function replacer(key: string, value: any) {
+    if (typeof value === "bigint") {
+      return value.toString();
+    }
+    return value;
+  }
+
+  console.log(JSON.stringify(digitalAsset, replacer));
+}
 
 async function getTokenByMint(mint: string): Promise<Token> {
   let data;
@@ -59,13 +77,15 @@ async function getTokenByMint(mint: string): Promise<Token> {
   // get by metaplex api
   const mintAddr = publicKey(mint);
   const digitalAsset = await fetchDigitalAsset(umi, mintAddr);
-
+  // logDigitalAsset(digitalAsset);
   data = new Token(
     digitalAsset.publicKey,
     digitalAsset.metadata.name,
     digitalAsset.metadata.symbol,
     digitalAsset.mint.decimals,
     digitalAsset.mint.supply.toString(),
+    digitalAsset.metadata.updateAuthority,
+    digitalAsset.metadata.uri,
   );
   const jsonData = JSON.stringify(data);
   redis.set(key, jsonData);
@@ -82,14 +102,13 @@ interface Resp {
   token: Token;
 }
 
-let tokenNull: Token = new Token("", "", "", 0, "");
+let tokenNull: Token = new Token("", "", "", 0, "", "", "");
 let resp: Resp = { status: 0, err: "", token: tokenNull };
 
 app.get("/token/:mint", async (req, res) => {
   let mint = req.params.mint;
   try {
     let token = await getTokenByMint(mint);
-
     resp.status = 0;
     resp.err = "";
     resp.token = token;
