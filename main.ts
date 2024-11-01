@@ -98,26 +98,32 @@ const app = express();
 
 interface Resp {
   status: number;
-  err: string;
+  err_code: number;
+  err_msg: string;
   token: Token;
 }
 
 let tokenNull: Token = new Token("", "", "", 0, "", "", "");
-let resp: Resp = { status: 0, err: "", token: tokenNull };
+let resp: Resp = { status: 0, err_code: 0, err_msg: "", token: tokenNull };
 
 app.get("/token/:mint", async (req, res) => {
   let mint = req.params.mint;
   try {
     let token = await getTokenByMint(mint);
     resp.status = 0;
-    resp.err = "";
+    resp.err_code = 0;
+    resp.err_msg = "";
     resp.token = token;
     res.json(resp);
   } catch (err) {
     console.error(err);
     resp.status = 1;
-    resp.err = JSON.stringify(err);
+    resp.err_code = 1;
+    resp.err_msg = JSON.stringify(err);
     resp.token = tokenNull;
+    if (err instanceof Error && err.name == "AccountNotFoundError") {
+      resp.err_code = 2;
+    }
     res.status(500).json(resp);
   }
 });
