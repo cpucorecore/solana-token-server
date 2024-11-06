@@ -16,6 +16,8 @@ const umi = createUmi(
 const redis = new Redis(process.env.TOKEN_SERVER_REDIS_URL || "localhost:6379");
 const localCache = new NodeCache();
 
+const TokenKeyPrefix = process.env.TOKEN_KEY_PREFIX || "smt:900:t:";
+
 class Token {
   address: string;
   name: string;
@@ -43,8 +45,6 @@ class Token {
     this.uri = uri;
   }
 }
-
-const TokenKeyPrefix = "t:";
 
 function logDigitalAsset(digitalAsset: DigitalAsset) {
   function replacer(key: string, value: any) {
